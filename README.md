@@ -9,18 +9,18 @@ Eshop určen k prodeji roušek, respirátorů a jiného zboží k ochraně zdrav
 ### Userinfo microservice - Juraj
 * store user information
 * store order history
-### Product microservice
+### Product microservice - Aleš
 * add a new product
 * change product description
 * add a price
-### Order microservice
+### Order microservice - Jozef
 * make new order
 * cancel order
 * can show metrics collection
-### Display product microservice
+### Display product microservice - Jozef
 * display a single product 
 * show list of products
-### Availibility service
+### Availibility service - Aleš
 * can show health check capabilities
 ### Authentization service - Juraj
 * token generation
