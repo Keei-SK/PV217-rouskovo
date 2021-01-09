@@ -4,7 +4,7 @@ Eshop určen k prodeji roušek, respirátorů a jiného zboží k ochraně zdrav
 # Project Structure
 ## Types of microservices
 ### User defaults microservice - Juraj
-* login
+* user login (authenticate and generate token)
 * register new user
 ### Userinfo microservice - Juraj
 * store user information
@@ -22,9 +22,6 @@ Eshop určen k prodeji roušek, respirátorů a jiného zboží k ochraně zdrav
 * show list of products
 ### Availibility service - Aleš
 * can show health check capabilities
-### Authentization service - Juraj
-* token generation
-* authentication of users
 
 ## Technologies
 
