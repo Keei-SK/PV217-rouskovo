@@ -1,17 +1,25 @@
 package cz.muni.fi.pv217.rouskovo;
 
+import org.eclipse.microprofile.jwt.JsonWebToken;
+
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
+import javax.inject.Inject;
 import javax.json.bind.JsonbConfig;
 import javax.transaction.Transactional;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.SecurityContext;
 
 @Path("/userdefaults")
 public class UserDefaultsService {
+
+    @Inject
+    JsonWebToken jwt;
 
     @GET
     @PermitAll
@@ -21,6 +29,19 @@ public class UserDefaultsService {
                 "Register at '/register' \n" +
                 "Already a customer? Head to '/login'";
         return instructions;
+    }
+
+    @GET
+    @PermitAll
+    @Path("/login")
+    public String login(@Context SecurityContext ctx) {
+        if (ctx.getUserPrincipal() == null) {
+            return "Login using username and password";
+        }
+        if (ctx.isUserInRole("customer") || ctx.isUserInRole("admin")) {
+            return "Generated Token";
+        }
+        return securityContext.getUserPrincipal().getName();
     }
 
     @GET
@@ -37,7 +58,7 @@ public class UserDefaultsService {
     public String registerCustomer(UserEntity entity) {
 
         // perform some integrity checks
-        entity.role = "Customer";
+        entity.role = "customer";
         entity.persist();
         return "Welcome " + entity.username +
                 "! Thank your for using our services";
@@ -45,10 +66,10 @@ public class UserDefaultsService {
 
     @POST
     @RolesAllowed("admin")
-    @Produces(MediaType.TEXT_PLAIN)
+    @Path("/admin")
     @Transactional
     public String createAdmin(UserEntity entity) {
-        entity.role = "Admin";
+        entity.role = "admin";
         entity.persist();
         return "New admin " + entity.username +
                 " added successfully";

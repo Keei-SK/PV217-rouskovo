@@ -1,6 +1,7 @@
 package cz.muni.fi.pv217.rouskovo;
 
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 import io.restassured.http.Method;
 import org.apache.http.entity.ContentType;
 import org.junit.jupiter.api.BeforeAll;
@@ -47,7 +48,51 @@ public class UserDefaultsServiceTest {
                         "! Thank your for using our services"));
 
         assertThat(UserEntity.count("username", username) == 1);
+        assertThat(UserEntity.count("role", "customer") == 1);
 
+    }
+
+    @Test
+    @TestSecurity(user = "testadmin", roles = { "admin" })
+    public void testCreateAdminSuccess() {
+        String username = "admin";
+        String json = Json.createObjectBuilder()
+                .add("username", username)
+                .add("password", "admin")
+                .build()
+                .toString();
+
+        given()
+                .contentType(String.valueOf(ContentType.APPLICATION_JSON))
+                .body(json)
+                .when()
+                .post("/userdefaults/admin")
+                .then()
+                .statusCode(200)
+                .body(is("New admin " + username +
+                        " added successfully"));
+
+        assertThat(UserEntity.count("username", username) == 1);
+        assertThat(UserEntity.count("role", "admin") == 1);
+    }
+
+    @Test
+    @TestSecurity(user = "testuser", roles = { "customer" })
+    public void testCreateAdminFailure() {
+        String username = "admin";
+        String json = Json.createObjectBuilder()
+                .add("admin", username)
+                .add("password", "admin")
+                .build()
+                .toString();
+
+        given()
+                .contentType(String.valueOf(ContentType.APPLICATION_JSON))
+                .body(json)
+                .when()
+                .post("/userdefaults/admin")
+                .then()
+                .statusCode(403); // 403 - Forbidden
     }
 
 }
