@@ -1,6 +1,8 @@
 package cz.muni.fi.pv217.rouskovo;
 
 import javax.annotation.security.PermitAll;
+import javax.json.bind.JsonbConfig;
+import javax.transaction.Transactional;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -14,7 +16,9 @@ public class UserDefaultsResource {
     @PermitAll
     @Produces(MediaType.TEXT_PLAIN)
     public String welcome() {
-        String instructions = "Register at '/register' \nAlready a customer? Head to '/login'";
+        String instructions = "Welcome to our e-shop \n" +
+                "Register at '/register' \n" +
+                "Already a customer? Head to '/login'";
         return instructions;
     }
 
@@ -26,9 +30,16 @@ public class UserDefaultsResource {
     }
 
     @POST
+    @PermitAll
     @Path("/register")
-    public String register(String username, String password) {
-        return "test";
+    @Transactional
+    public String registerCustomer(UserEntity newEntity) {
+
+        // perform some integrity checks
+        newEntity.role = "Customer";
+        newEntity.persist();
+        return "Welcome " + newEntity.username +
+                "! Thank your for using our services";
     }
 
 }
