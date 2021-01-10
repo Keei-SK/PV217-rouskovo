@@ -8,4 +8,4 @@ services:
     env_file:
       - database.env
     volumes:
-      - ${HOME}/order-db/:/var/lib/postgresql/data:Z
+      - ${HOME}/postgres-data/:/var/lib/postgresql/data:Z

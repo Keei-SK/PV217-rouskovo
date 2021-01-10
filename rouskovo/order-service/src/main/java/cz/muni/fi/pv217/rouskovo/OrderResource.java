@@ -8,12 +8,22 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 @Path("/order")
-public class OrderService {
+public class OrderResource {
 
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String newOrder() {
-        return "Hello RESTEasy new";
+    @POST
+    @Path("/new")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    public OrderEntity createOrder() {
+        OrderEntity newOrder = new OrderEntity();
+
+        newOrder.username = "test0";
+        newOrder.productID = "1";
+        newOrder.quantity = 10;
+        newOrder.totalPrice = 120;
+
+        newOrder.persist();
+        return newOrder;
     }
 
     @GET
