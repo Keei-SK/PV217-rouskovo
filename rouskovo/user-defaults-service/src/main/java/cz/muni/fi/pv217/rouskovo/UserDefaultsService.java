@@ -41,7 +41,7 @@ public class UserDefaultsService {
         if (ctx.isUserInRole("customer") || ctx.isUserInRole("admin")) {
             return "Generated Token";
         }
-        return securityContext.getUserPrincipal().getName();
+        return "Incorrect username or password";
     }
 
     @GET
@@ -58,7 +58,7 @@ public class UserDefaultsService {
     public String registerCustomer(UserEntity entity) {
 
         // perform some integrity checks
-        entity.role = "customer";
+        entity.role = Role.CUSTOMER;
         entity.persist();
         return "Welcome " + entity.username +
                 "! Thank your for using our services";
@@ -69,7 +69,7 @@ public class UserDefaultsService {
     @Path("/admin")
     @Transactional
     public String createAdmin(UserEntity entity) {
-        entity.role = "admin";
+        entity.role = Role.ADMIN;
         entity.persist();
         return "New admin " + entity.username +
                 " added successfully";

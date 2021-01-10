@@ -48,7 +48,7 @@ public class UserDefaultsServiceTest {
                         "! Thank your for using our services"));
 
         assertThat(UserEntity.count("username", username) == 1);
-        assertThat(UserEntity.count("role", "customer") == 1);
+        assertThat(UserEntity.count("role", Role.CUSTOMER) == 1);
 
     }
 
@@ -73,7 +73,7 @@ public class UserDefaultsServiceTest {
                         " added successfully"));
 
         assertThat(UserEntity.count("username", username) == 1);
-        assertThat(UserEntity.count("role", "admin") == 1);
+        assertThat(UserEntity.count("role", Role.ADMIN) == 1);
     }
 
     @Test

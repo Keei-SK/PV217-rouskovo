@@ -11,11 +11,11 @@ public class UserEntity extends PanacheEntity {
     public String username;
     public String password;
     @JsonbProperty(nillable = true)
-    public String role;
+    public Role role;
 
     public UserEntity() {}
 
-    public UserEntity(String username, String password, String role) {
+    public UserEntity(String username, String password, Role role) {
         this.username = username;
         this.password = password;
         this.role = role;
