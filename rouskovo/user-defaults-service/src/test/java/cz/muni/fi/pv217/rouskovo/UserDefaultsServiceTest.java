@@ -53,7 +53,7 @@ public class UserDefaultsServiceTest {
     }
 
     @Test
-    @TestSecurity(user = "testadmin", roles = { "admin" })
+    @TestSecurity(user = "testadmin", roles = { "ADMIN" })
     public void testCreateAdminSuccess() {
         String username = "admin";
         String json = Json.createObjectBuilder()

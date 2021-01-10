@@ -4,13 +4,18 @@ import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
 import javax.json.bind.annotation.JsonbProperty;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 public class UserEntity extends PanacheEntity {
 
+    @PrimaryKeyJoinColumn
     public String username;
     public String password;
     @JsonbProperty(nillable = true)
+    @Enumerated(EnumType.STRING)
     public Role role;
 
     public UserEntity() {}

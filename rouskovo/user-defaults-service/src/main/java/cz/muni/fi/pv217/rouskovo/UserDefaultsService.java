@@ -1,25 +1,24 @@
 package cz.muni.fi.pv217.rouskovo;
 
-import org.eclipse.microprofile.jwt.JsonWebToken;
-
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
-import javax.inject.Inject;
-import javax.json.bind.JsonbConfig;
+
+import javax.json.Json;
 import javax.transaction.Transactional;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
 @Path("/userdefaults")
 public class UserDefaultsService {
-
-    @Inject
-    JsonWebToken jwt;
 
     @GET
     @PermitAll
@@ -35,13 +34,34 @@ public class UserDefaultsService {
     @PermitAll
     @Path("/login")
     public String login(@Context SecurityContext ctx) {
-        if (ctx.getUserPrincipal() == null) {
+        var principal = ctx.getUserPrincipal();
+        if (principal == null) {
             return "Login using username and password";
         }
-        if (ctx.isUserInRole("customer") || ctx.isUserInRole("admin")) {
-            return "Generated Token";
+        Client client = ClientBuilder.newClient();
+        String path = "/token";
+        String json = getJson("upn", principal.getName());
+        path += (ctx.isUserInRole(Role.ADMIN.name())) ? "/admin" : "/customer";
+        Response response = client.target("http://localhost:8087")
+                .path("/token/")
+                .request()
+                .header("Authorization", "Bearer " + getOwnToken())
+                .post(Entity.json(json));
+        if (response.getStatus() == 200) {
+            return "Token request failed with status code " + response.getStatus();
         }
-        return "Incorrect username or password";
+        return response.readEntity(String.class);
+    }
+
+    public String getJson(String key, String value) {
+        return Json.createObjectBuilder()
+                .add(key, value)
+                .build()
+                .toString();
+    }
+
+    public String getOwnToken() {
+        return "test";
     }
 
     @GET
@@ -65,7 +85,7 @@ public class UserDefaultsService {
     }
 
     @POST
-    @RolesAllowed("admin")
+    @RolesAllowed("ADMIN")
     @Path("/admin")
     @Transactional
     public String createAdmin(UserEntity entity) {
