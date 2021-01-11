@@ -7,11 +7,8 @@ import javax.validation.constraints.Min;
 @Entity
 public class OrderEntity extends PanacheEntity{
     public String username;
-
     public int productID;
-
     @Min(1)
     public int quantity;
-
     public Double totalPrice;
 }

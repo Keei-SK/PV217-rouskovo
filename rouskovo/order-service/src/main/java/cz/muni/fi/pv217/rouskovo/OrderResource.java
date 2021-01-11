@@ -1,5 +1,7 @@
 package cz.muni.fi.pv217.rouskovo;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.ws.rs.*;
@@ -9,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("/order")
+@ApplicationScoped
 public class OrderResource {
 
     @GET
@@ -60,16 +63,32 @@ public class OrderResource {
     }
 
 
+    @Inject
+    OrderService orderService;
+    @POST
+    @Path("/{id}/cancel")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response cancelOrder(@PathParam("id") long id) {
+        OrderEntity order;
+        try {
+            order = orderService.deleteOrder(id);
 
-    @GET
-    @Path("/cancel")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String cancelOrder() {
-        return "Hello RESTEasy cancel";
+            if (order == null) {
+                return Response
+                        .status(Response.Status.INTERNAL_SERVER_ERROR)
+                        .entity("Cannot delete order with id " + id)
+                        .build();
+            }
+        } catch (NotFoundException ex) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity(String.format("Order with id %d not found.", id))
+                    .build();
+        }
+
+        return Response.ok(order).build();
     }
-
-
-
+    
 
 
     @GET
