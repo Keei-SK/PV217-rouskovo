@@ -43,7 +43,7 @@ public class UserDefaultsService {
         String json = getJson("upn", principal.getName());
         path += (ctx.isUserInRole(Role.ADMIN.name())) ? "/admin" : "/customer";
         Response response = client.target("http://localhost:8087")
-                .path("/token/")
+                .path(path)
                 .request()
                 .header("Authorization", "Bearer " + getOwnToken())
                 .post(Entity.json(json));
