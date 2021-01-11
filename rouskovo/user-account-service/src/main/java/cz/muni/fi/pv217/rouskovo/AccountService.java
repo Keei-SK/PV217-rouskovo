@@ -28,24 +28,29 @@ public class AccountService {
     @Transactional
     public String setDetails(@Context SecurityContext ctx, Customer customer) {
 
-        customer.username = "user"; // will be obtained from token
+        customer.username = getUsername(ctx);
         customer.persist();
         return "Account information updated successfully";
     }
 
     @GET
-    //@RolesAllowed({"CUSTOMER", "ADMIN"})
+    @RolesAllowed({"CUSTOMER", "ADMIN"})
     @Path("/info")
-    public String showDetails() {
-        return "Show account details";
+    @Produces(MediaType.TEXT_PLAIN)
+    public String showDetails(@Context SecurityContext ctx) {
+        Customer c = Customer.findByUsername(getUsername(ctx));
+        return "Account details\n" + c.toString();
     }
 
     @GET
-    //@RolesAllowed({"CUSTOMER", "ADMIN"})
+    @RolesAllowed({"CUSTOMER", "ADMIN"})
     @Path("/myorders")
     public String showOrders() {
-
         return "Show account orders";
+    }
+
+    public String getUsername(SecurityContext ctx) {
+        return ctx.getUserPrincipal().getName();
     }
 
 }
