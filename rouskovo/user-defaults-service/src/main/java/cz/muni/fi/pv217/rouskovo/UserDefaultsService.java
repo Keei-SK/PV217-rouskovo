@@ -69,8 +69,18 @@ public class UserDefaultsService {
     }
 
     public static String getOwnToken() {
+        /*
         String token = new Scanner(UserDefaultsService.class.getClassLoader().getResourceAsStream("/admin.token"), "UTF-8").useDelimiter("\\A").next();
         return token;
+         */
+        // issues in native, quick fix
+        return "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc" +
+                "3VlciIsInVwbiI6ImFkbWluIiwiZ3JvdXBzIjpbIkNVU1RPTUVSIiwiQURNSU4iXSwiaWF0IjoxNjEwM" +
+                "zY3ODI2LCJleHAiOjE2MTA5NzI2MjYsImp0aSI6IklLdUczYk1qZzQ0Q25fRW44cDk4WlEifQ.Nzt8ReUil" +
+                "EElo1doK1zhSuKEl6M7nE4reyHrD3uSis6uoYhc0DQGK19fmVeI8LXPrsnujYI51xRgRpC_g7opDhYCh0OWCNN" +
+                "ubUALzDDaffbhuHifWPVgXLPJgudONJQVAh0Eg3TtxCeffcnHVLS2zQKoMKn3_7G_2ClcfwytMIV1LRtdK_dbc" +
+                "NlsdWZ0fQMuVWjtlo2UWpabPQFVw-AjAQcEXh-qBndYlj5Sy90HGNNjnClxBg9bdjPRhdOpK6QHkeg-D4omC9OM5Ov" +
+                "sniFkOM71ukSN5wRZ8Z7QulyJeuA4Af06q1JY5qN9sY8PMKR-lE6_2cxqNQ8NPf0B_EH5KQ";
     }
 
     @GET
