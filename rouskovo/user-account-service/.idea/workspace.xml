@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="974d1fd4-a77b-4820-8ed4-792d57bd13ad" name="Default Changelist" comment="initialized user account service">
+      <change beforePath="$PROJECT_DIR$/../user-defaults-service/.dockerignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-defaults-service/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-defaults-service/.mvn/wrapper/MavenWrapperDownloader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-defaults-service/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-defaults-service/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-defaults-service/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-defaults-service/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-defaults-service/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-defaults-service/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-defaults-service/src/main/docker/Dockerfile.fast-jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-defaults-service/src/main/docker/Dockerfile.jvm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-defaults-service/src/main/docker/Dockerfile.native" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-defaults-service/src/main/java/cz/muni/fi/pv217/rouskovo/Role.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-defaults-service/src/main/java/cz/muni/fi/pv217/rouskovo/TokenGenerator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-defaults-service/src/main/java/cz/muni/fi/pv217/rouskovo/UserDefaultsService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-defaults-service/src/main/java/cz/muni/fi/pv217/rouskovo/UserEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-defaults-service/src/main/resources/META-INF/resources/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-defaults-service/src/main/resources/META-INF/resources/privateKey.pem" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-defaults-service/src/main/resources/META-INF/resources/publicKey.pem" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-defaults-service/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-defaults-service/src/test/java/cz/muni/fi/pv217/rouskovo/NativeUserDefaultsServiceIT.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-defaults-service/src/test/java/cz/muni/fi/pv217/rouskovo/UserDefaultsServiceTest.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectId" id="1mu1QxNdo5hnKZDpB3xOeZLPY9K" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="974d1fd4-a77b-4820-8ed4-792d57bd13ad" name="Default Changelist" comment="" />
+      <created>1610328653017</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1610328653017</updated>
+    </task>
+    <task id="LOCAL-00001" summary="initialized user account service">
+      <created>1610328707281</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1610328707281</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="initialized user account service" />
+    <option name="LAST_COMMIT_MESSAGE" value="initialized user account service" />
+  </component>
+</project>
