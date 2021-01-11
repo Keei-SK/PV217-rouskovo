@@ -10,6 +10,8 @@ Eshop určen k prodeji roušek, respirátorů a jiného zboží k ochraně zdrav
 * store user information
 * show order history
 ### Product microservice - Aleš
+* display a single product 
+* show list of products
 * add a new product
 * change product description
 * add a price
@@ -17,9 +19,6 @@ Eshop určen k prodeji roušek, respirátorů a jiného zboží k ochraně zdrav
 * make new order
 * cancel order
 * can show metrics collection
-### Display product microservice - Jozef
-* display a single product 
-* show list of products
 ### Availibility service - Aleš
 * can show health check capabilities
 
