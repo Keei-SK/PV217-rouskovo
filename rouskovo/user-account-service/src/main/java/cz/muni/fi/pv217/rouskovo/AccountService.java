@@ -7,10 +7,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
@@ -21,6 +18,15 @@ public class AccountService {
 
     @Inject
     private JsonWebToken jwt;
+
+    @GET
+    @RolesAllowed({"CUSTOMER", "ADMIN"})
+    @Path("/info")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String showDetails(@Context SecurityContext ctx) {
+        Customer c = Customer.findByUsername(getUsername(ctx));
+        return "Account details\n" + c.toString();
+    }
 
     @POST
     @RolesAllowed({"CUSTOMER", "ADMIN"})
@@ -33,14 +39,16 @@ public class AccountService {
         return "Account information updated successfully";
     }
 
-    @GET
+    @DELETE
     @RolesAllowed({"CUSTOMER", "ADMIN"})
     @Path("/info")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String showDetails(@Context SecurityContext ctx) {
+    @Transactional
+    public String deleteUser(@Context SecurityContext ctx, Customer custome) {
         Customer c = Customer.findByUsername(getUsername(ctx));
-        return "Account details\n" + c.toString();
+
+        return "Your account info has been successfully deleted";
     }
+
 
     @GET
     @RolesAllowed({"CUSTOMER", "ADMIN"})
