@@ -102,7 +102,7 @@ public class ProductResource {
 
     @GET
     @Path("/connection")
-    @Retry(maxRetries = 3)
+    @Retry(maxRetries = 2)
     @Fallback(fallbackMethod = "disconnected")
     @Produces(MediaType.TEXT_PLAIN)
     public String connected() {

@@ -9,13 +9,4 @@ import static org.hamcrest.CoreMatchers.is;
 @QuarkusTest
 public class ProductResourceTest {
 
-    @Test
-    public void testHelloEndpoint() {
-        given()
-          .when().get("/C:/Program Files/Git/product")
-          .then()
-             .statusCode(200)
-             .body(is("Hello RESTEasy"));
-    }
-
 }
