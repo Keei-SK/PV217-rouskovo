@@ -7,6 +7,7 @@ import org.apache.http.entity.ContentType;
 import org.junit.jupiter.api.Test;
 
 import javax.json.Json;
+import javax.json.JsonObject;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
@@ -29,20 +30,23 @@ public class TokenGeneratorTest {
                 .when().post("/token/admin")
                 .then()
                 .statusCode(200);
-        // System.out.println(response.body.toString());
     }
 
-    /*
     @Test
     @TestSecurity(user = "admin", roles = { "ADMIN" })
-    public void testTokenGenerator() {
+    public void testCuSTomerTokenGenerator() {
+        String json = Json.createObjectBuilder()
+                .add("upn", "user")
+                .build()
+                .toString();
+
         var response = given()
-                .when().get("/token")
+                .contentType(String.valueOf(ContentType.APPLICATION_JSON))
+                .filter(ResponseLoggingFilter.logResponseIfStatusCodeIs(200))
+                .body(json)
+                .when().post("/token/customer")
                 .then()
-                .statusCode(200)
-                .extract();
-        System.out.println(response.toString());
+                .statusCode(200);
     }
-    */
 
 }
