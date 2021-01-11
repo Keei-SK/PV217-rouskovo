@@ -1,6 +1,8 @@
 package cz.muni.fi.pv217.rouskovo;
 
 import cz.muni.fi.pv217.rouskovo.entity.Product;
+import cz.muni.fi.pv217.rouskovo.entity.ProductType;
+import cz.muni.fi.pv217.rouskovo.health.ProductServiceHealthCheck;
 import cz.muni.fi.pv217.rouskovo.service.ProductService;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -11,15 +13,21 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import io.quarkus.panache.common.Sort;
+import org.eclipse.microprofile.faulttolerance.Fallback;
+import org.eclipse.microprofile.faulttolerance.Retry;
+import org.jboss.logging.Logger;
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
 
 import java.util.List;
+import java.util.Random;
 
-@Path("/product")
+@Path("/products")
 @ApplicationScoped
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class ProductResource {
+
+    private static final Logger LOGGER = Logger.getLogger(ProductResource.class);
 
     @Inject
     ProductService productService;
@@ -85,11 +93,22 @@ public class ProductResource {
         return Response.ok(product).build();
     }
 
+    private void maybeFail(String FailureMessage) {
+        if (new Random().nextBoolean()) {
+            LOGGER.error(FailureMessage);
+            throw new RuntimeException("Resource failure");
+        }
+    }
 
     @GET
-    @Path("/test")
+    @Path("/connection")
+    @Retry(maxRetries = 3)
+    @Fallback(fallbackMethod = "disconnected")
     @Produces(MediaType.TEXT_PLAIN)
-    public String hello() {
-        return "Hello test";
+    public String connected() {
+        maybeFail("Unable to connect to server.");
+        return "Connection is OK";
     }
+
+    private String disconnected() { return "Server is down"; }
 }
