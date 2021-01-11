@@ -16,6 +16,14 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.util.Scanner;
+import java.util.stream.Collectors;
 
 @Path("/userdefaults")
 public class UserDefaultsService {
@@ -31,7 +39,7 @@ public class UserDefaultsService {
     }
 
     @GET
-    @PermitAll
+    @RolesAllowed({"ADMIn", "CUSTOMER"})
     @Path("/login")
     public String login(@Context SecurityContext ctx) {
         var principal = ctx.getUserPrincipal();
@@ -47,7 +55,7 @@ public class UserDefaultsService {
                 .request()
                 .header("Authorization", "Bearer " + getOwnToken())
                 .post(Entity.json(json));
-        if (response.getStatus() == 200) {
+        if (response.getStatus() != 200) {
             return "Token request failed with status code " + response.getStatus();
         }
         return response.readEntity(String.class);
@@ -60,8 +68,9 @@ public class UserDefaultsService {
                 .toString();
     }
 
-    public String getOwnToken() {
-        return "test";
+    public static String getOwnToken() {
+        String token = new Scanner(UserDefaultsService.class.getClassLoader().getResourceAsStream("/admin.token"), "UTF-8").useDelimiter("\\A").next();
+        return token;
     }
 
     @GET

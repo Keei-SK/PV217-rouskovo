@@ -4,6 +4,7 @@ import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.security.TestSecurity;
 import io.restassured.http.Method;
 import org.apache.http.entity.ContentType;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -13,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.hamcrest.CoreMatchers.is;
 
 @QuarkusTest
@@ -93,6 +95,11 @@ public class UserDefaultsServiceTest {
                 .post("/userdefaults/admin")
                 .then()
                 .statusCode(403); // 403 - Forbidden
+    }
+
+    @Test
+    public void getOwnTokenTest() {
+        Assertions.assertDoesNotThrow(() -> UserDefaultsService.getOwnToken());
     }
 
 }
