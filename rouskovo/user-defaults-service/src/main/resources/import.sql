@@ -1,1 +1,0 @@
-INSERT INTO UserEntity(id, username, password, role) VALUES (nextval('hibernate_sequence'), 'admin', 'admin', 'ADMIN');
