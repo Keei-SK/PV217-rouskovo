@@ -16,10 +16,11 @@ public class HealthCheckService {
     private List<MicroServiceHealth> services = new ArrayList<>();
 
     public void loadServices(@Observes StartupEvent event) {
-        MicroServiceHealth product_service = new MicroServiceHealth();
-        product_service.name = "product-service";
-        product_service.url = "http://localhost:8082";
-        services.add(product_service);
+        services.add(new MicroServiceHealth("user-defaults-service", "http://localhost:8080"));
+        services.add(new MicroServiceHealth("user-account-service", "http://localhost:8081"));
+        services.add(new MicroServiceHealth("product-service", "http://localhost:8082"));
+        services.add(new MicroServiceHealth("order-service", "http://localhost:8083"));
+        services.add(new MicroServiceHealth("health-service", "http://localhost:8084"));
     }
 
     private MicroServiceHealth checkService(MicroServiceHealth service) {

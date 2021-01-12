@@ -7,4 +7,11 @@ public class MicroServiceHealth {
     public String url;
     public String status;
     public List<Check> checks;
+
+    public MicroServiceHealth() {}
+
+    public MicroServiceHealth(String name, String url) {
+        this.name = name;
+        this.url = url;
+    }
 }
