@@ -41,6 +41,9 @@ public class AccountService {
     @Produces(MediaType.TEXT_PLAIN)
     public String viewCustomerDetails(@Context SecurityContext ctx) {
         Customer c = Customer.findByUsername(getUsername(ctx));
+        if (c == null) {
+            return "Customer info has been deleted";
+        }
         return "Account details\n" + c.toString();
     }
 
@@ -53,7 +56,6 @@ public class AccountService {
     @Operation(summary = "Set account information")
     @Produces(MediaType.TEXT_PLAIN)
     public String setCustomerDetails(@Context SecurityContext ctx, Customer customer) {
-
         customer.username = getUsername(ctx);
         customer.persist();
         return "Account information have been set successfully";
@@ -66,10 +68,13 @@ public class AccountService {
     @APIResponses(value = {
             @APIResponse(responseCode = "200", description = "Successfully Updated account information", content = @Content(schema = @Schema(implementation = Customer.class)))})
     @Operation(summary = "Update account information")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     public String updateCustomer(@Context SecurityContext ctx, Customer customer) {
         Customer c = Customer.findByUsername(getUsername(ctx));
-        // c.update();
+        c.delete();
+        customer.username = getUsername(ctx);
+        customer.persist();
         return "Account information have been successfully updated";
     }
 
@@ -81,7 +86,7 @@ public class AccountService {
     @APIResponses(value = {
             @APIResponse(responseCode = "200", description = "Succesfully deleted account", content = @Content(schema = @Schema(implementation = Customer.class)))})
     @Operation(summary = "Deletes customer's account")
-    public String deleteCustomer(@Context SecurityContext ctx, Customer custome) {
+    public String deleteCustomer(@Context SecurityContext ctx) {
         Customer c = Customer.findByUsername(getUsername(ctx));
         c.delete();
         return "Your account information have been successfully deleted";
