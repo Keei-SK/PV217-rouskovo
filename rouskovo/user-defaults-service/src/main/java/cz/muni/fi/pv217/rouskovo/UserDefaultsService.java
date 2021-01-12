@@ -1,5 +1,13 @@
 package cz.muni.fi.pv217.rouskovo;
 
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.enums.SecuritySchemeType;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirement;
+import org.eclipse.microprofile.openapi.annotations.security.SecurityScheme;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.eclipse.microprofile.openapi.annotations.tags.Tags;
+
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 
@@ -26,11 +34,16 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 @Path("/userdefaults")
+@Tags(value = @Tag(name = "Welcome to our e-shop \n" +
+        "Register at '/register' \n" +
+        "Already a customer? Head to '/login'"))
+@SecurityScheme(securitySchemeName = "Basic", type = SecuritySchemeType.HTTP, scheme = "Basic")
 public class UserDefaultsService {
 
     @GET
     @PermitAll
     @Produces(MediaType.TEXT_PLAIN)
+    @Operation(summary = "Show welcome message")
     public String welcome() {
         String instructions = "Welcome to our e-shop \n" +
                 "Register at '/register' \n" +
@@ -40,7 +53,9 @@ public class UserDefaultsService {
 
     @GET
     @RolesAllowed({"ADMIn", "CUSTOMER"})
+    @SecurityRequirement(name = "Basic", scopes = {})
     @Path("/login")
+    @Operation(summary = "Login into your account")
     public String login(@Context SecurityContext ctx) {
         var principal = ctx.getUserPrincipal();
         if (principal == null) {
@@ -86,6 +101,7 @@ public class UserDefaultsService {
     @GET
     @PermitAll
     @Path("/register")
+    @Operation(summary = "Show register information")
     public String registerInfo() {
         return "Choose a username and a password";
     }
@@ -94,6 +110,7 @@ public class UserDefaultsService {
     @PermitAll
     @Path("/register")
     @Transactional
+    @Operation(summary = "Register a new customer account")
     public String registerCustomer(UserEntity entity) {
 
         // perform some integrity checks
@@ -107,6 +124,8 @@ public class UserDefaultsService {
     @RolesAllowed("ADMIN")
     @Path("/admin")
     @Transactional
+    @Operation(summary = "Register an admin account")
+    @SecurityRequirement(name = "Basic", scopes = {})
     public String createAdmin(UserEntity entity) {
         entity.role = Role.ADMIN;
         entity.persist();
