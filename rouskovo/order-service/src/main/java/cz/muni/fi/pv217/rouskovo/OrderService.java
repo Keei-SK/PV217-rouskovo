@@ -1,5 +1,8 @@
 package cz.muni.fi.pv217.rouskovo;
 
+import cz.muni.fi.pv217.rouskovo.entity.OrderEntity;
+import cz.muni.fi.pv217.rouskovo.entity.ProductEntity;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -43,6 +46,7 @@ public class OrderService {
     }
 
     private ProductEntity getProductID(Integer id){
+
         Client client = ClientBuilder.newClient();
         Response response = client.target("http://127.0.0.1:8082")
                 .path("/product/"+id.toString())
@@ -92,7 +96,6 @@ public class OrderService {
         boolean deleted = OrderEntity.deleteById(id);
         return deleted ? foundOrder : null;
     }
-
 
 
     @GET

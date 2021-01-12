@@ -1,4 +1,4 @@
-package cz.muni.fi.pv217.rouskovo;
+package cz.muni.fi.pv217.rouskovo.entity;
 
 public class ProductEntity {
     public int id;
