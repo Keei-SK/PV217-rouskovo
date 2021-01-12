@@ -1,0 +1,66 @@
+---
+openapi: 3.0.3
+info:
+  title: Generated API
+  version: "1.0"
+paths:
+  /order:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+  /order/new:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderEntity'
+      responses:
+        "200":
+          description: OK
+  /order/{id}/cancel:
+    post:
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          format: int32
+          type: integer
+      responses:
+        "200":
+          description: OK
+components:
+  schemas:
+    OrderEntity:
+      required:
+      - productID
+      - quantity
+      - username
+      type: object
+      properties:
+        id:
+          format: int64
+          type: integer
+        productID:
+          format: int32
+          type: integer
+          nullable: false
+        quantity:
+          format: int32
+          minimum: 1
+          type: integer
+          nullable: false
+        totalPrice:
+          format: double
+          minimum: 0
+          type: number
+        username:
+          pattern: \S
+          type: string
+          nullable: false
