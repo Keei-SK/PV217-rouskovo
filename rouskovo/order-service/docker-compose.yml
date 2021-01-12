@@ -1,0 +1,11 @@
+version: "3.9"  # optional since v1.27.0
+
+services:
+  postgres-orders:
+    image: postgres
+    ports:
+      - "5435:5432"
+    env_file:
+      - database.env
+    volumes:
+      - ${HOME}/postgres-data-order/:/var/lib/postgresql/data:Z
