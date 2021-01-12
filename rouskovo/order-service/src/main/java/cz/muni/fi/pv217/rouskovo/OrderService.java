@@ -23,10 +23,10 @@ public class OrderService {
     @Produces(MediaType.TEXT_PLAIN)
     @Timed(name = "defaultServiceRequestTimer", description = "A measure of how long it takes to get a response from a server for standard request.", unit = MetricUnits.MILLISECONDS)
     public String orderInfo() {
-        return "To create an order use HTTP method POST on 'current_address/new' like: \n\t'http POST 0.0.0.0:8083/order/new username=pabloescobar productID=123456789 quantity=20'\n\n" +
+        return "To create an order use HTTP method POST on 'current_address/new' like: \n\t 'http POST 0.0.0.0:8083/order/new username=pabloescobar productID=123456789 quantity=20'\n\n" +
                 "To cancel order use HTTP method POST on 'current_address/order_id/cancel' like: \n\t 'http POST :8083/order/1/cancel'\n\n" +
                 "To show metrics use HTTP method GET on 'current_address/metrics' like: \n\t 'http :8083/metrics' \n\n" +
-                "For less detailed metrics use: \n\t http :8083/metrics/application Accept:application/json\n\n";
+                "For less detailed metrics use: \n\t 'http :8083/metrics/application Accept:application/json'\n\n";
     }
 
     @POST
@@ -51,7 +51,6 @@ public class OrderService {
         return Response.ok(newOrder).build();
     }
 
-    @Timed(name = "getProductDetailsTimer", description = "A measure of how long it takes to get a product ID.", unit = MetricUnits.MILLISECONDS)
     private ProductEntity getProductID(Integer id){
 
         Client client = ClientBuilder.newClient();

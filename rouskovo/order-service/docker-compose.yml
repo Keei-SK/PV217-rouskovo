@@ -4,7 +4,7 @@ services:
   postgres-orders:
     image: postgres
     ports:
-      - "5432:5432"
+      - "5435:5432"
     env_file:
       - database.env
     volumes:
