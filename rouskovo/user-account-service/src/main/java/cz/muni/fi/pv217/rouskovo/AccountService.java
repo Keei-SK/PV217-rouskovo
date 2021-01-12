@@ -46,6 +46,7 @@ public class AccountService {
 
     @POST
     @Path("/info")
+    @SecurityRequirement(name = "jwt", scopes = {})
     @Transactional
     @APIResponses(value = {
             @APIResponse(responseCode = "200", description = "Successfully set account information", content = @Content(schema = @Schema(implementation = Customer.class)))})
@@ -55,11 +56,12 @@ public class AccountService {
 
         customer.username = getUsername(ctx);
         customer.persist();
-        return "Account information updated successfully";
+        return "Account information have been set successfully";
     }
 
     @PUT
     @Path("/info")
+    @SecurityRequirement(name = "jwt", scopes = {})
     @Transactional
     @APIResponses(value = {
             @APIResponse(responseCode = "200", description = "Successfully Updated account information", content = @Content(schema = @Schema(implementation = Customer.class)))})
@@ -67,13 +69,14 @@ public class AccountService {
     @Produces(MediaType.TEXT_PLAIN)
     public String updateCustomer(@Context SecurityContext ctx, Customer customer) {
         Customer c = Customer.findByUsername(getUsername(ctx));
-        // update
-        return "Account information has been successfully updated";
+        // c.update();
+        return "Account information have been successfully updated";
     }
 
 
     @DELETE
     @Path("/info")
+    @SecurityRequirement(name = "jwt", scopes = {})
     @Transactional
     @APIResponses(value = {
             @APIResponse(responseCode = "200", description = "Succesfully deleted account", content = @Content(schema = @Schema(implementation = Customer.class)))})
@@ -81,7 +84,7 @@ public class AccountService {
     public String deleteCustomer(@Context SecurityContext ctx, Customer custome) {
         Customer c = Customer.findByUsername(getUsername(ctx));
         c.delete();
-        return "Your account info has been successfully deleted";
+        return "Your account information have been successfully deleted";
     }
 
     @GET
