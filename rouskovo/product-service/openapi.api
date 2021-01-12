@@ -1,0 +1,108 @@
+openapi: 3.0.3
+info:
+  title: Generated API
+  version: "1.0"
+paths:
+  /products:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListProduct'
+  /products/connection:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+  /products/create:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+  /products/{id}:
+    get:
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      responses:
+        "200":
+          description: OK
+  /products/{id}/delete:
+    delete:
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      responses:
+        "200":
+          description: OK
+  /products/{id}/update:
+    put:
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+components:
+  schemas:
+    ProductType:
+      enum:
+      - MASK
+      - RESPIRATOR
+      type: string
+    Product:
+      type: object
+      properties:
+        id:
+          format: int64
+          type: integer
+        description:
+          type: string
+        name:
+          type: string
+        price:
+          format: double
+          type: number
+        type:
+          $ref: '#/components/schemas/ProductType'
+    ListProduct:
+      type: array
+      items:
+        $ref: '#/components/schemas/Product'
