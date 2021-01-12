@@ -2,6 +2,9 @@ package cz.muni.fi.pv217.rouskovo;
 
 import cz.muni.fi.pv217.rouskovo.entity.OrderEntity;
 import cz.muni.fi.pv217.rouskovo.entity.ProductEntity;
+import org.eclipse.microprofile.metrics.MetricUnits;
+import org.eclipse.microprofile.metrics.annotation.Counted;
+import org.eclipse.microprofile.metrics.annotation.Timed;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
@@ -18,10 +21,12 @@ public class OrderService {
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
+    @Timed(name = "defaultServiceRequestTimer", description = "A measure of how long it takes to get a response from a server for standard request.", unit = MetricUnits.MILLISECONDS)
     public String orderInfo() {
         return "To create an order use HTTP method POST on 'current_address/new' like: \n\t'http POST 0.0.0.0:8083/order/new username=pabloescobar productID=123456789 quantity=20'\n\n" +
                 "To cancel order use HTTP method POST on 'current_address/order_id/cancel' like: \n\t 'http POST :8083/order/1/cancel'\n\n" +
-                "To show metrics use HTTP method GET on 'current_address/metrics' like: \n\t 'http GET 0.0.0.0:8083/order/metrics'\n\n";
+                "To show metrics use HTTP method GET on 'current_address/metrics' like: \n\t 'http :8083/metrics' \n\n" +
+                "For less detailed metrics use: \n\t http :8083/metrics/application Accept:application/json\n\n";
     }
 
     @POST
@@ -29,6 +34,7 @@ public class OrderService {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
+    @Timed(name = "createOrderTimer", description = "A measure of how long it takes to create an order.", unit = MetricUnits.MILLISECONDS)
     public Response createOrder(@Valid OrderEntity newOrder) {
 
         ProductEntity product = getProductID(newOrder.productID);
@@ -45,6 +51,7 @@ public class OrderService {
         return Response.ok(newOrder).build();
     }
 
+    @Timed(name = "getProductDetailsTimer", description = "A measure of how long it takes to get a product ID.", unit = MetricUnits.MILLISECONDS)
     private ProductEntity getProductID(Integer id){
 
         Client client = ClientBuilder.newClient();
@@ -65,6 +72,7 @@ public class OrderService {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
+    @Counted
     public Response cancelOrder(@PathParam("id") int id) {
         OrderEntity orderRecord;
         try {
@@ -95,13 +103,5 @@ public class OrderService {
 
         boolean deleted = OrderEntity.deleteById(id);
         return deleted ? foundOrder : null;
-    }
-
-
-    @GET
-    @Path("/metrics")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String metrics() {
-        return "Hello RESTEasy metrics";
     }
 }
